@@ -37,24 +37,29 @@ function onSubPub(){
 }
 </script>
 <input type='button' value='创建新商家' />
-<div class="form-group" id='myform'>
+<div class="form-group">
+	<form id='pubform' name='pubform' method="post" action='./createShop' enctype="multipart/form-data" onsubmit="return onSubPub();">
     <input type="text" class="form-control" name="shopname" placeholder="请输入营业点名称">
-
+    <input type="text" class="form-control" name="email" placeholder="请输入营业点账号">
+    <input type="text" class="form-control" name="pwd" placeholder="请输入营业点密码">
     <textarea class="form-control" rows="5" placeholder="请输入营业简介" name='shopintr'></textarea>
     <input type="text" class="form-control" name='keywords' placeholder="请输入查询关键词">
     <select class="form-control" name='shoptype'>
       <option value='0'>请选择经营类别</option>
-      
+      <option value='1'>快餐</option>
+      <option value='2'>火锅</option>
     </select>
     <label for="lastname" class="col-sm-2 control-label">店铺图片</label>
     <input type="file" id="inputfile" name='photourl'>
     经度:<input type='text' name='lng' readonly>&nbsp;
     维度:<input type='text' name='lat' readonly>&nbsp;
-    <input type="submit" class="btn btn-primary" onclick='dian();' value='确定地理位置'>
+    <input type="button" class="btn btn-primary" value='确定地理位置' data-toggle="modal" data-target="#myModal">
     <br/>
     <input type="submit" class="btn btn-primary" onclick='dian();' value='提交'>
+    </form>
 </input>
 </div>
+<% include ./mapModel %>
 
 
 				

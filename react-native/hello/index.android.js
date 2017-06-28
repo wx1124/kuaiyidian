@@ -5,6 +5,7 @@
  */
 
 import React, { Component } from 'react';
+import {SimpleApp} from './components/MultiPage'
 import {
   AppRegistry,
   StyleSheet,
@@ -25,12 +26,12 @@ export default class hello extends Component {
   render() {
     return (
       <View style={[Layout.outer]}>
-        <View style={[Layout.top,{flexDirection:'row-reverse',alignItems:'center'}]}>
-          <Text style={{margin:6}}>
-            注册
-          </Text>
+        <View style={[Layout.top,{flexDirection:'row',justifyContent:'flex-end',alignItems:'center'}]}>
           <Text >
             登陆
+          </Text>
+          <Text style={{margin:6}}>
+            注册
           </Text>
         </View>
         <Text style={[Layout.body]}>
@@ -106,4 +107,5 @@ const css1 = StyleSheet.create({
   },
 })
 
-AppRegistry.registerComponent('hello', () => hello);
+//AppRegistry.registerComponent('hello', () => hello);
+AppRegistry.registerComponent('hello', () => SimpleApp);
