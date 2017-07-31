@@ -35,9 +35,15 @@ function onSubPub(){
 
 	return true;
 }
+	function createShop(){
+		$('#createShop').show();
+	}
+	function hidCreateShop(){
+		$('#createShop').hide();
+	}
 </script>
-<input type='button' value='创建新商家' />
-<div class="form-group">
+<input type='button' value='创建新商家' onclick='createShop()'/>
+<div class="form-group" id='createShop' style='display:none'>
 	<form id='pubform' name='pubform' method="post" action='./createShop' enctype="multipart/form-data" onsubmit="return onSubPub();">
     <input type="text" class="form-control" name="shopname" placeholder="请输入营业点名称">
     <input type="text" class="form-control" name="email" placeholder="请输入营业点账号">
@@ -55,10 +61,33 @@ function onSubPub(){
     维度:<input type='text' name='lat' readonly>&nbsp;
     <input type="button" class="btn btn-primary" value='确定地理位置' data-toggle="modal" data-target="#myModal">
     <br/>
-    <input type="submit" class="btn btn-primary" onclick='dian();' value='提交'>
+    <input type="submit" class="btn btn-primary" onclick='dian();' value='提交'></input>
+    &nbsp;
+    <input type="button" class="btn btn-primary" onclick='hidCreateShop();' value='收起'></input>
     </form>
-</input>
 </div>
+<table class="table table-hover">
+  <caption>餐饮网店列表</caption>
+  <thead>
+    <tr>
+      <th>饭店名称</th>
+      <th>用户</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% rs.forEach(function(item){ %>
+    <tr>
+      <td><%-item.shopname%></td>
+      <td><a href='#'>用户信息</a></td>
+      <td>
+      	<a href='#'>修改</a>&nbsp;
+      	<a href='#'>删除</a>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
 <% include ./mapModel %>
 
 

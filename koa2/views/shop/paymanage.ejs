@@ -1,0 +1,74 @@
+
+<script>
+function imgChange(thisa,imgId){
+    if (typeof FileReader === 'undefined') {  
+        alert('你的浏览器不支持FileReader接口！');  
+        return;  
+    }
+    var file = thisa.files[0];
+    if(!/image\/\w+/.test(file.type)){  
+        alert("看清楚,这个需要图片！"); 
+        thisa.value='';
+        return false;
+    }
+    var reader = new FileReader();  
+    //将文件以Data URL形式读入页面  
+    reader.readAsDataURL(file);
+    reader.onload=function(e){  
+        //显示文件  
+        var img = document.getElementById(imgId);
+        img.src = this.result;
+    }
+}
+function onsub(){
+  if(payform.weixin.value||payform.zhifubao.value){
+    return true;
+  }
+  alert('请选择微信或支付宝二维码图');
+  return false;
+}
+</script>
+<form name='payform' action='./uploadPay' method='post' enctype="multipart/form-data" onsubmit="return onsub();">
+<table class="table table-bordered" align='center'>
+<tr>
+  <td align="center" colspan="2">微信图片:</td>
+</tr>
+<tr align="center">aa
+  <td>
+    <% if(rs.length>0){ %>
+      <img id='weixinId' src='<%-rs[0].weixin%>' width='120' height="120" />
+    <% }else{ %>
+      <img id='weixinId' src='../../images/payimg/weixin.jpg' width='120' height="120" />
+    <%
+    }
+    %>
+  </td>
+  <td valign="bottom">
+    <input type='file' name='weixin' style="margin-top:50px" onChange="imgChange(this,'weixinId')"/>
+  </td>
+</tr>
+<tr>
+  <td align="center" colspan="2">支付宝图片:</td>
+</tr>
+<tr align="center">
+  <td>
+    <% if(rs.length>0){ %>
+      <img id='zhifubaoId' src='<%-rs[0].zhifubao%>' width='120' height="120" />
+    <% }else{ %>
+      <img id='zhifubaoId' src='../../images/payimg/zhifubao.jpg' width='120' height="120" />
+    <%
+    }
+    %>
+  </td>
+  <td valign="bottom">
+    <input type='file' name='zhifubao' style="margin-top:50px" onChange="imgChange(this,'zhifubaoId')"/>
+  </td>
+</tr>
+<tr>
+  <td align="center" colspan="2">
+    <input type='submit' value='上传' class="btn btn-primary"/>
+  </td>
+</tr>
+</table>
+</form>
+

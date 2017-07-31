@@ -13,7 +13,9 @@ const session = require('koa-generic-session');
 const index = require('./routes/index');
 const users = require('./routes/users');
 const admin = require('./routes/admin');
-
+const shop = require('./routes/shop');
+const dish = require('./routes/dish');
+const check = require('./routes/check');
 
 // middlewares
 app.use(convert(bodyparser));
@@ -39,6 +41,29 @@ app.use(async (ctx, next) => {
 router.use('/', index.routes(), index.allowedMethods());
 router.use('/users', users.routes(), users.allowedMethods());
 router.use('/admin', admin.routes(), admin.allowedMethods());
+router.use('/shop', shop.routes(), shop.allowedMethods());
+router.use('/dish', dish.routes(), dish.allowedMethods());
+router.use('/check', check.routes(), check.allowedMethods());
+
+var openPage = ['/','/admin/login','/shop/login','/shop/mobileLogin'];
+app.use(async (ctx, next) => { 
+    var url = ctx.originalUrl;
+    console.log('url='+url);
+    url = (url.split('?'))[0];
+    if(openPage.indexOf(url)>-1){
+    	await next();
+    }else{
+    	if(ctx.session.loginbean){
+        let loginbean = ctx.session.loginbean;
+        ctx.state = {
+            loginbean: loginbean
+        };
+	  		await next();
+	  	}else{
+	  		ctx.redirect('/');
+	  	}
+    }
+});
 
 app.use(router.routes(), router.allowedMethods());
 // response
